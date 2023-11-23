@@ -1,0 +1,13 @@
+name = "LaskaPlot"
+uuid = "47311fc3-b5d5-4c44-b326-9386a1fd4d79"
+authors = ["Elias Sjölin <elias.sjolin@gmail.com>"]
+version = "1.0.0-DEV"
+
+[compat]
+julia = "1"
+
+[extras]
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[targets]
+test = ["Test"]
