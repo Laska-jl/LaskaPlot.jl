@@ -100,7 +100,7 @@ function MakieCore.plot!(plt::FrequencyByDepthPlot)
         plt.color[] = standardcol
     end
     if isnothing(plt[:customx][])
-        plt[:customx][] = sampleratetoms(collect(roundup(minval(spikesatdepth(p[], (0.0, maxdepth))), period[]):period[]:roundup(maxval(spikesatdepth(p[], (0.0, maxdepth))), period[]))[2:end], parse(Float64, getmeta(p[], "imSampRate")))
+        plt[:customx][] = sampleratetoms(collect(roundup(LaskaCore.minval(spikesatdepth(p[], (0.0, maxdepth))), period[]):period[]:roundup(maxval(spikesatdepth(p[], (0.0, maxdepth))), period[]))[2:end], parse(Float64, getmeta(p[], "imSampRate")))
     end
 
     if plt[:stimlines][]
