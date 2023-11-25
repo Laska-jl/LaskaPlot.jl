@@ -86,6 +86,7 @@ function MakieCore.plot!(plt::FrequencyByDepthPlot)
                 LaskaCore.relativefrequency(LaskaCore.spikesatdepth(p[], dpth), period[])
             )
         end
+
         maxresp = maximum(maximum(lins[])) + abs(minimum(minimum(lins[])))
         for i in length(lins[]):-1:1
             lins[][i] .+= (((i - 1) * maxresp) - 1)
