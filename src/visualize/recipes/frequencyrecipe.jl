@@ -104,13 +104,6 @@ function MakieCore.plot!(plt::FrequencyByDepthPlot)
         plt[:customx][] = LaskaCore.sampleratetoms(collect(LaskaCore.roundup(LaskaCore.minval(spikesatdepth(p[], (0.0, maxdepth))), period[]):period[]:LaskaCore.roundup(LaskaCore.maxval(spikesatdepth(p[], (0.0, maxdepth))), period[]))[2:end], parse(Float64, getmeta(p[], "imSampRate")))
     end
 
-    if plt[:stimlines][]
-        stimT = collect(values(stimtimes(p[])))
-        Makie.vlines!(
-            plt,
-            stimT,
-        )
-    end
 
 
     for i in eachindex(lins[])
@@ -135,4 +128,13 @@ function MakieCore.plot!(plt::FrequencyByDepthPlot)
             depth_shift=plt.depth_shift[],
             space=plt.space[])
     end
+
+    if plt[:stimlines][]
+        stimT = collect(values(stimtimes(p[])))
+        Makie.vlines!(
+            plt,
+            stimT,
+        )
+    end
+
 end

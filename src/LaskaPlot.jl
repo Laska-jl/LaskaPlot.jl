@@ -10,4 +10,7 @@ using Makie
 # Visualization
 include("visualize/recipes/frequencyrecipe.jl")
 export frequencybydepthplot
+
+include("visualize/recipes/frequencyrecipe.jl")
+
 end
