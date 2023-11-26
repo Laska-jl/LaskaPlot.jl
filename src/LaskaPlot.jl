@@ -11,6 +11,6 @@ using Makie
 include("visualize/recipes/frequencyrecipe.jl")
 export frequencybydepthplot
 
-include("visualize/recipes/frequencyrecipe.jl")
+include("visualize/recipes/rasterrecipe.jl")
 
 end
