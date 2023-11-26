@@ -12,6 +12,7 @@ MakieCore = "20f20a25-4f0e-4fdf-b5d1-57303727442b"
 Revise = "295af30f-e4ad-537b-8983-00126c2a3abe"
 
 [compat]
+CairoMakie = "0.11"
 Makie = "0.20"
 MakieCore = "0.7"
 Revise = "3"
