@@ -35,10 +35,13 @@ Requires an `experiment::RelativeSpikes`, number of `depths` and `period` for le
 MakieCore.@recipe(FrequencyByDepthPlot, experiment, depths, period) do scene
     MakieCore.Attributes(
         stimlines=true,
+        stimlinecolor=:gray,
+        stimlinealpha=0.7,
+        stimlinewidth=1.5,
         customx=nothing,
         color=nothing,
         linestyle=:solid,
-        linewidth=1.5,
+        linewidth=2.0,
         colormap=:viridis,
         colorscale=identity,
         colorrange=(0.0, 2.5),
@@ -83,7 +86,7 @@ function MakieCore.plot!(plt::FrequencyByDepthPlot)
             dpth::NTuple{2,Float64} = ((actualdepths[i] - 1) * depthinterval, actualdepths[i] * depthinterval)
             push!(
                 lins[],
-                LaskaCore.relativefrequency(LaskaCore.spikesatdepth(p[], dpth), period[])
+                LaskaStats.relativefrequency(LaskaCore.spikesatdepth(p[], dpth), period[])
             )
         end
 
@@ -104,7 +107,16 @@ function MakieCore.plot!(plt::FrequencyByDepthPlot)
         plt[:customx][] = LaskaCore.sampleratetoms(collect(LaskaCore.roundup(LaskaCore.minval(spikesatdepth(p[], (0.0, maxdepth))), period[]):period[]:LaskaCore.roundup(LaskaCore.maxval(spikesatdepth(p[], (0.0, maxdepth))), period[]))[2:end], parse(Float64, getmeta(p[], "imSampRate")))
     end
 
-
+    if plt[:stimlines][]
+        stimT = collect(values(stimtimes(p[])))
+        Makie.vlines!(
+            plt,
+            stimT,
+            color=plt[:stimlinecolor][],
+            alpha=plt[:stimlinealpha][],
+            linewidth=plt[:stimlinewidth][]
+        )
+    end
 
     for i in eachindex(lins[])
         MakieCore.lines!(
@@ -129,12 +141,6 @@ function MakieCore.plot!(plt::FrequencyByDepthPlot)
             space=plt.space[])
     end
 
-    if plt[:stimlines][]
-        stimT = collect(values(stimtimes(p[])))
-        Makie.vlines!(
-            plt,
-            stimT,
-        )
-    end
+
 
 end
