@@ -12,6 +12,10 @@ Requires an `experiment::RelativeSpikes`, number of `depths` and `period` for le
 ### Plot-specific Attributes
 
 - `customx` A vector of custom x values. Should be of the same length as the number of frequency bins.
+- `stimlines::Bool`: Should lines at each stimulation time (as specified when creating the `RelativeSpikes`-struct) be included?
+    - `stimlinecolor`
+    - `stimlinealpha`
+    - `stimlinewidth`
 
 ### General 'lines' attributes
 
