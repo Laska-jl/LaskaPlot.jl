@@ -124,7 +124,7 @@ function MakieCore.plot!(plt::FrequencyByDepthPlot)
     for i in eachindex(lins[])
         MakieCore.lines!(
             plt,
-            plt[:customx][],
+            plt[:customx][][1:length(lins[][i])],
             lins[][i],
             color=plt.color[],
             linestyle=plt.linestyle[],
