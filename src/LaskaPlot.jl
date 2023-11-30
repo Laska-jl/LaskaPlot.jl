@@ -2,8 +2,9 @@ module LaskaPlot
 
 const standardcol = "#4C2C69"::String
 
-using LaskaCore
-using LaskaStats
+using Reexport
+@reexport using LaskaCore
+@reexport using LaskaStats
 using MakieCore
 using Makie
 

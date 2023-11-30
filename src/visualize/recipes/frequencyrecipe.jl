@@ -121,7 +121,6 @@ function MakieCore.plot!(plt::FrequencyByDepthPlot)
             linewidth=plt[:stimlinewidth][]
         )
     end
-
     for i in eachindex(lins[])
         MakieCore.lines!(
             plt,

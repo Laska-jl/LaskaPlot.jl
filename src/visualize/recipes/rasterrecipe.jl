@@ -42,8 +42,8 @@ end
 function MakieCore.plot!(plt::RasterPlot)
     p = plt[:cluster]
 
-    if !(p[] isa LaskaCore.AbstractCluster)
-        throw(ArgumentError("Data must be an AbstractCluster, not a $(typeof(p[]))"))
+    if !(p[] isa LaskaCore.RelativeCluster)
+        throw(ArgumentError("Data must be an RelativeCluster{T}, not a $(typeof(p[]))"))
     end
 
     spikes::MakieCore.Observable{Vector{Vector{Float32}}} = MakieCore.Observable(spiketimes(p[]))
