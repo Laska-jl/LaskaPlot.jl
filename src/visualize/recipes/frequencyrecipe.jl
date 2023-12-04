@@ -74,6 +74,9 @@ function MakieCore.plot!(plt::FrequencyByDepthPlot)
     alldepths::Vector{Float64} = parse.(Float64, info.(clustervector(p[]), "depth"))
     maxdepth::Float64 = maximum(alldepths)
 
+    steps::StepRange = (((LaskaCore.roundup(LaskaCore.minval(spikesatdepth(p[], (0.0, maxdepth))), period[])-period[]):period[]:LaskaCore.roundup(LaskaCore.maxval(spikesatdepth(p[], (0.0, maxdepth))), period[]))[2:end])
+
+
     function update_plot(p, depths, period, alldepths, maxdepth)
         depthinterval = maxdepth / depths[]
         actualdepths::Vector{Int64} = Int64[]
@@ -90,11 +93,11 @@ function MakieCore.plot!(plt::FrequencyByDepthPlot)
             dpth::NTuple{2,Float64} = ((actualdepths[i] - 1) * depthinterval, actualdepths[i] * depthinterval)
             push!(
                 lins[],
-                LaskaStats.relativefrequency(LaskaCore.spikesatdepth(p[], dpth), period[])
+                LaskaStats.relativefrequency(LaskaCore.spikesatdepth(p[], dpth), steps)
             )
         end
-
-        maxresp = maximum(maximum(lins[])) + abs(minimum(minimum(lins[])))
+        println(typeof(lins[]))
+        maxresp = LaskaCore.maxval(lins[], 0.0) + abs(LaskaCore.minval(lins[], 0.0))
         for i in length(lins[]):-1:1
             lins[][i] .+= (((i - 1) * maxresp) - 1)
         end
