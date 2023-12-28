@@ -71,7 +71,7 @@ function MakieCore.plot!(plt::FrequencyByDepthPlot)
     period = plt.period
 
     lins = MakieCore.Observable(Vector{Vector{Float64}}(undef, 0))
-    alldepths::Vector{Float64} = parse.(Float64, info.(clustervector(p[]), "depth"))
+    alldepths::Vector{Float64} = info.(clustervector(p[]), "depth")
     maxdepth::Float64 = maximum(alldepths)
 
     steps::StepRange = (((LaskaCore.roundup(LaskaCore.minval(spikesatdepth(p[], (0.0, maxdepth))), period[])-period[]):period[]:LaskaCore.roundup(LaskaCore.maxval(spikesatdepth(p[], (0.0, maxdepth))), period[]))[2:end])
@@ -96,7 +96,6 @@ function MakieCore.plot!(plt::FrequencyByDepthPlot)
                 LaskaStats.relativefrequency(LaskaCore.spikesatdepth(p[], dpth), steps)
             )
         end
-        println(typeof(lins[]))
         maxresp = LaskaCore.maxval(lins[], 0.0) + abs(LaskaCore.minval(lins[], 0.0))
         for i in length(lins[]):-1:1
             lins[][i] .+= (((i - 1) * maxresp) - 1)
@@ -111,7 +110,8 @@ function MakieCore.plot!(plt::FrequencyByDepthPlot)
         plt.color[] = standardcol
     end
     if isnothing(plt[:customx][])
-        plt[:customx][] = LaskaCore.sampleratetoms(collect(LaskaCore.roundup(LaskaCore.minval(spikesatdepth(p[], (0.0, maxdepth))), period[]):period[]:LaskaCore.roundup(LaskaCore.maxval(spikesatdepth(p[], (0.0, maxdepth))), period[]))[2:end], parse(Float64, getmeta(p[], "imSampRate")))
+        plt[:customx][] = LaskaCore.sampleratetoms(
+            collect(LaskaCore.roundup(LaskaCore.minval(spikesatdepth(p[], (0.0, maxdepth))), period[]):period[]:LaskaCore.roundup(LaskaCore.maxval(spikesatdepth(p[], (0.0, maxdepth))), period[]))[2:end], getmeta(p[], "imSampRate"))
     end
 
     if plt[:stimlines][]
