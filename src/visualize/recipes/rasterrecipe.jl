@@ -11,7 +11,7 @@ MakieCore.@recipe(RasterPlot, cluster) do scene
         color=theme(scene, :markercolor),
         cycle=[:color],
         marker=:circle,
-        markersize=9,
+        markersize=7,
         markerspace=:pixel,
         strokewidth=0,
         strokecolor=:black,
