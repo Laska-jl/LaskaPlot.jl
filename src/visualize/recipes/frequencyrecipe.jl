@@ -127,7 +127,7 @@ function MakieCore.plot!(plt::FrequencyByDepthPlot)
                     period[],
                 ),
             )[2:end],
-            getmeta(p[], "imSampRate"),
+            parse(Float64, getmeta(p[], "imSampRate")),
         )
     end
 
