@@ -6,12 +6,12 @@ MakieCore.@recipe(RasterPlot, cluster) do scene
     MakieCore.Attributes(
         # Specific attributes
         convert_samplerate=true,
-        samplerate=30_000,
+        samplerate=nothing,
         # Scatter attributes
         color=theme(scene, :markercolor),
         cycle=[:color],
         marker=:circle,
-        markersize=7,
+        markersize=3,
         markerspace=:pixel,
         strokewidth=0,
         strokecolor=:black,
@@ -43,11 +43,13 @@ function MakieCore.plot!(plt::RasterPlot)
     p = plt[:cluster]
 
     if !(p[] isa LaskaCore.RelativeCluster)
-        throw(ArgumentError("Data must be an RelativeCluster{T}, not a $(typeof(p[]))"))
+        throw(ArgumentError("Type of cluster must be LaskaCore.RelativeCluster, not $(typeof(p[]))"))
     end
 
     spikes::MakieCore.Observable{Vector{Vector{Float32}}} = MakieCore.Observable(spiketimes(p[]))
-
+    if isnothing(plt[:samplerate][])
+        plt[:samplerate][] = info(p[], "samprate")
+    end
     if plt[:convert_samplerate][]
         conversion_factor::Float32 = 1 / (plt[:samplerate][] * 0.001)
         for i in eachindex(spikes[])
