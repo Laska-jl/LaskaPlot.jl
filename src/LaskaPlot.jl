@@ -14,4 +14,6 @@ export frequencybydepthplot
 
 include("visualize/recipes/rasterrecipe.jl")
 
+include("visualize/interactive/smooth.jl")
+
 end

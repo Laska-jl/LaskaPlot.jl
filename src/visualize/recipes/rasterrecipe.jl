@@ -1,5 +1,6 @@
 #-----------
 # Rasterplot
+using Makie: update_plot!
 #-----------
 
 MakieCore.@recipe(RasterPlot, cluster) do scene
@@ -57,43 +58,47 @@ function MakieCore.plot!(plt::RasterPlot)
         end
     end
 
-    for i in eachindex(spikes[])
-        scatter!(
-            plt,
-            spikes[][i],
-            fill(i - 1, length(spikes[][i])),
-            # Scatter attributes
-            color=plt[:color][],
-            cycle=plt[:cycle][],
-            marker=plt[:marker][],
-            markersize=plt[:markersize][],
-            markerspace=plt[:markerspace][],
-            strokewidth=plt[:strokewidth][],
-            strokecolor=plt[:strokecolor][],
-            glowwidth=plt[:glowwidth][],
-            glowcolor=plt[:glowcolor][],
-            rotations=plt[:rotations][],
-            transform_marker=plt[:transform_marker][],
-            # Color Attributes
-            colormap=plt[:colormap][],
-            colorscale=plt[:colorscale][],
-            colorrange=plt[:colorrange][],
-            nan_color=plt[:nan_color][],
-            lowclip=plt[:lowclip][],
-            highclip=plt[:highclip][],
-            alpha=plt[:alpha][],
-            # Generic attributes
-            visible=plt[:visible][],
-            overdraw=plt[:overdraw][],
-            transparency=plt[:transparency][],
-            fxaa=plt[:fxaa][],
-            inspectable=plt[:inspectable][],
-            depth_shift=plt[:depth_shift][],
-            model=plt[:model][],
-            space=plt[:space][]
-        )
+    plt[:color][] = typeof(plt[:color][]) <: AbstractVector ? Iterators.cycle(plt[:color][]) : Iterators.cycle([plt[:color][],])
 
+    function update_plot!(plt, spikes)
+        for (i, c) in zip(eachindex(spikes[]), plt[:color][])
+            scatter!(
+                plt,
+                spikes[][i],
+                fill(i - 1, length(spikes[][i])),
+                # Scatter attributes
+                color=c,
+                cycle=plt[:cycle][],
+                marker=plt[:marker][],
+                markersize=plt[:markersize][],
+                markerspace=plt[:markerspace][],
+                strokewidth=plt[:strokewidth][],
+                strokecolor=plt[:strokecolor][],
+                glowwidth=plt[:glowwidth][],
+                glowcolor=plt[:glowcolor][],
+                rotations=plt[:rotations][],
+                transform_marker=plt[:transform_marker][],
+                # Color Attributes
+                colormap=plt[:colormap][],
+                colorscale=plt[:colorscale][],
+                colorrange=plt[:colorrange][],
+                nan_color=plt[:nan_color][],
+                lowclip=plt[:lowclip][],
+                highclip=plt[:highclip][],
+                alpha=plt[:alpha][],
+                # Generic attributes
+                visible=plt[:visible][],
+                overdraw=plt[:overdraw][],
+                transparency=plt[:transparency][],
+                fxaa=plt[:fxaa][],
+                inspectable=plt[:inspectable][],
+                depth_shift=plt[:depth_shift][],
+                model=plt[:model][],
+                space=plt[:space][]
+            )
 
+        end
     end
+    update_plot!(plt, spikes)
 
 end
