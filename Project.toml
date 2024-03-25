@@ -1,7 +1,7 @@
 name = "LaskaPlot"
 uuid = "47311fc3-b5d5-4c44-b326-9386a1fd4d79"
 authors = ["Elias Sjölin <elias.sjolin@gmail.com>"]
-version = "0.0.8"
+version = "0.0.9"
 
 [deps]
 LaskaCore = "9ad29ce2-7782-4744-ab48-6ef9cc0286bb"
