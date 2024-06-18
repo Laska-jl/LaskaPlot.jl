@@ -1,7 +1,8 @@
 #-----------
 # Rasterplot
-using Makie: update_plot!
 #-----------
+
+using Makie: update_plot!
 
 MakieCore.@recipe(RasterPlot, cluster) do scene
     MakieCore.Attributes(
@@ -11,8 +12,8 @@ MakieCore.@recipe(RasterPlot, cluster) do scene
         # Scatter attributes
         color=theme(scene, :markercolor),
         cycle=[:color],
-        marker=:circle,
-        markersize=3,
+        marker=:vline,
+        markersize=5,
         markerspace=:pixel,
         strokewidth=0,
         strokecolor=:black,
@@ -49,7 +50,7 @@ function MakieCore.plot!(plt::RasterPlot)
 
     spikes::MakieCore.Observable{Vector{Vector{Float32}}} = MakieCore.Observable(spiketimes(p[]))
     if isnothing(plt[:samplerate][])
-        plt[:samplerate][] = info(p[], "samprate")
+        plt[:samplerate][] = LaskaCore.samplerate(LaskaCore.spiketimes(p[]))
     end
     if plt[:convert_samplerate][]
         conversion_factor::Float32 = 1 / (plt[:samplerate][] * 0.001)
@@ -98,6 +99,7 @@ function MakieCore.plot!(plt::RasterPlot)
             )
 
         end
+
     end
     update_plot!(plt, spikes)
 
