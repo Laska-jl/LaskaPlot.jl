@@ -5,7 +5,6 @@ const standardcol = "#4C2C69"::String
 using Reexport
 @reexport using LaskaCore
 @reexport using LaskaStats
-using MakieCore
 using Makie
 
 # Visualization

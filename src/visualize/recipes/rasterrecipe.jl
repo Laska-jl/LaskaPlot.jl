@@ -2,10 +2,9 @@
 # Rasterplot
 #-----------
 
-using Makie: update_plot!
 
-MakieCore.@recipe(RasterPlot, cluster) do scene
-    MakieCore.Attributes(
+Makie.@recipe(RasterPlot, cluster) do scene
+    Makie.Attributes(
         # Specific attributes
         convert_samplerate=true,
         samplerate=nothing,
@@ -19,13 +18,12 @@ MakieCore.@recipe(RasterPlot, cluster) do scene
         strokecolor=:black,
         glowwidth=0,
         glowcolor=(:black, 0),
-        rotations=MakieCore.Billboard(0.0f0),
+        rotation=Makie.Billboard(0.0f0),
         transform_marker=false,
         # Color attributes
         colormap=:viridis,
         colorscale=identity,
         colorrange=nothing,
-        nan_color=Makie.RGBAf(0, 0, 0, 0),
         lowclip=nothing,
         highclip=nothing,
         alpha=1.0,
@@ -41,21 +39,21 @@ MakieCore.@recipe(RasterPlot, cluster) do scene
     )
 end
 
-function MakieCore.plot!(plt::RasterPlot)
+function Makie.plot!(plt::RasterPlot)
     p = plt[:cluster]
 
     if !(p[] isa LaskaCore.RelativeCluster)
         throw(ArgumentError("Type of cluster must be LaskaCore.RelativeCluster, not $(typeof(p[]))"))
     end
 
-    spikes::MakieCore.Observable{Vector{Vector{Float32}}} = MakieCore.Observable(spiketimes(p[]))
+    spikes::Makie.Observable{Vector{Vector{Float32}}} = Makie.Observable(spiketimes(p[]))
     if isnothing(plt[:samplerate][])
         plt[:samplerate][] = LaskaCore.samplerate(LaskaCore.spiketimes(p[]))
     end
     if plt[:convert_samplerate][]
         conversion_factor::Float32 = 1 / (plt[:samplerate][] * 0.001)
         for i in eachindex(spikes[])
-            LaskaCore.sampleratetoms!(spikes[][i], conversion_factor)
+            spikes[][i] .*= conversion_factor
         end
     end
 
@@ -77,13 +75,12 @@ function MakieCore.plot!(plt::RasterPlot)
                 strokecolor=plt[:strokecolor][],
                 glowwidth=plt[:glowwidth][],
                 glowcolor=plt[:glowcolor][],
-                rotations=plt[:rotations][],
+                rotation=plt[:rotation][],
                 transform_marker=plt[:transform_marker][],
                 # Color Attributes
                 colormap=plt[:colormap][],
                 colorscale=plt[:colorscale][],
                 colorrange=plt[:colorrange][],
-                nan_color=plt[:nan_color][],
                 lowclip=plt[:lowclip][],
                 highclip=plt[:highclip][],
                 alpha=plt[:alpha][],
