@@ -7,14 +7,12 @@ version = "0.0.9"
 LaskaCore = "9ad29ce2-7782-4744-ab48-6ef9cc0286bb"
 LaskaStats = "de767ba9-e829-4e7c-bf82-062dc00bf36c"
 Makie = "ee78f7c6-11fb-53f2-987a-cfe4a2b5a57a"
-MakieCore = "20f20a25-4f0e-4fdf-b5d1-57303727442b"
 Reexport = "189a3867-3050-52da-a836-e630ba90ab69"
-Revise = "295af30f-e4ad-537b-8983-00126c2a3abe"
 
 [compat]
-Makie = "0.20"
-MakieCore = "0.7"
-Revise = "3"
+LaskaCore = "0"
+LaskaStats = "1"
+Reexport = "1"
 julia = "1"
 
 [extras]
